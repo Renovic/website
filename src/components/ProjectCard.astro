@@ -84,17 +84,19 @@ const firstImage = carouselImages[0];
 
 <style>
     .project-card {
+        --project-easing: cubic-bezier(0.77, 0, 0.175, 1);
+        display: flex;
         position: relative;
         z-index: 0;
         width: calc(50% - var(--horizontal-gap) / 2);
-        aspect-ratio: 4 / 3;
         transition:
-        width 350ms ease,
-        margin 350ms ease,
+        width 350ms var(--project-easing),
+        margin 350ms var(--project-easing),
         transform 150ms ease;
     }
 
     .project-card.card-right {
+        flex-direction: row-reverse;
         justify-self: end;
     }
 
@@ -124,8 +126,9 @@ const firstImage = carouselImages[0];
 
     .project-media {
         position: relative;
-        width: 100%;
-        height: 100%;
+        width: calc((100cqw - var(--horizontal-gap)) / 2);
+        aspect-ratio: 4 / 3;
+        transition: width 350ms var(--project-easing);
     }
 
     .project-trigger::after {
@@ -193,7 +196,7 @@ const firstImage = carouselImages[0];
         border-radius: 10px;
         font-family: var(--font-orbitron);
         color: #ffffff;
-        font-size: 1.5rem;
+        font-size: 1.375rem;
     }
 
     .project-card.is-open {
@@ -219,8 +222,8 @@ const firstImage = carouselImages[0];
     }
 
     .project-card.is-open .project-media {
-        flex: 0 0 60%;
-        width: 60%;
+        flex: 0 0 auto;
+        width: 60cqw;
         height: auto;
         aspect-ratio: 4 / 3;
         margin: 0;
@@ -496,18 +499,32 @@ const firstImage = carouselImages[0];
     }
 
     @media (max-width: 600px) {
+        .project-name {
+        left: 16px;
+        bottom: 16px;
+        max-width: calc(100% - 32px);
+        box-sizing: border-box;
+        font-size: clamp(1rem, 4.8vw, 1.25rem);
+        line-height: 1.3;
+        }
+
+        .project-media {
+        width: 100%;
+        }
+
         .project-card,
         .project-card.is-open {
         width: 100%;
         justify-self: stretch;
         }
 
-        .project-card:not(:first-child) {
-        margin-top: 20px;
+        .project-card:not(:first-child),
+        .project-card.is-open ~ .project-card {
+        margin-top: 24px;
         }
 
         .project-card.is-open {
-        margin-top: 20px;
+        margin-top: 24px;
         flex-direction: column;
         }
 
@@ -537,13 +554,85 @@ const firstImage = carouselImages[0];
         .project-card.is-open .project-details {
         width: 100%;
         flex: none;
-        padding: 24px;
+        padding: 20px;
         box-sizing: border-box;
+        }
+
+        .project-details h2 {
+        margin-top: 0;
+        font-size: clamp(1.125rem, 5vw, 1.375rem);
+        line-height: 1.3;
+        }
+
+        .project-details .slot-container {
+        font-size: 1rem;
+        line-height: 1.5;
+        }
+
+        .slot-container :global(ul) {
+        padding-inline-start: 1.25em;
         }
 
         .project-card.is-open .project-details-footer {
         position: static;
         margin: 16px 0 0;
+        flex-wrap: wrap;
+        gap: 12px;
+        }
+
+        .project-details-footer a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        box-sizing: border-box;
+        }
+
+        .carousel-button {
+        width: 44px;
+        height: 44px;
+        }
+
+        .carousel-prev {
+        left: 12px;
+        }
+
+        .carousel-next {
+        right: 12px;
+        }
+
+        .carousel-indicators {
+        bottom: 12px;
+        gap: 2px;
+        }
+
+        .carousel-indicator {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border: 0;
+        }
+
+        .carousel-indicator::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+        }
+
+        .carousel-indicator.is-active {
+        background: transparent;
+        }
+
+        .carousel-indicator.is-active::before {
+        background: #ffffff;
+        }
+    }
+
+    @media (max-width: 600px) and (hover: none) {
+        .project-card:hover {
+        transform: none;
         }
     }
 </style>
@@ -622,6 +711,13 @@ const firstImage = carouselImages[0];
                 indicator.setAttribute('aria-selected', String(isActive));
             });
         };
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', (event) => {
+                event.stopPropagation();
+                showImage(index, index >= imageIndex ? 'next' : 'prev');
+            });
+        });
 
         previousButton?.addEventListener('click', (event) => {
         event.stopPropagation();

@@ -28,9 +28,15 @@ import Webring from '../components/Webring.astro';
 			<a href="mailto:neerav.poluri@gmail.com" class="svg-link-button">
 				<EmailSvg width={40} height={40} />
 			</a>
+
+			<a href="/resume" class="svg-link-button" aria-label="View resume" title="Resume">
+				<svg width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<path fill-rule="evenodd" d="M5 2h9l5 5v15H5V2Zm9 2.8V8h3.2L14 4.8ZM8 11v2h8v-2H8Zm0 4v2h8v-2H8Z" />
+				</svg>
+			</a>
 			<br />
 
-			Check out some of my projects below:
+			<span class="projects-prompt">Check out some of my projects below:</span>
 		</p>
 	</div>
 
@@ -42,7 +48,7 @@ import Webring from '../components/Webring.astro';
 <style>
 	.intro {
 		position: relative;
-		width: min(100% - 50px, 1125px);
+		width: min(100% - 50px, 1150px);
 		top: 100px;
 	}
 	#hi {
@@ -51,13 +57,16 @@ import Webring from '../components/Webring.astro';
 		text-align: left;
 		font-weight: 700;
 		color: #fff;
+		margin-bottom: 16px;
 	}
 	#about {
 		font-family: var(--font-cascadia-code);
-		font-size: clamp(1rem, 2vw, 1.5rem);
+		font-size: clamp(1rem, 2vw, 1.375rem);
+		line-height: 1.35;
+		margin-top: 16px;
 		text-align: left;
 		color: #fff;
-		width: 400px;
+		width: 420px;
 	}
 	
 	.projects {
@@ -65,8 +74,14 @@ import Webring from '../components/Webring.astro';
 		justify-self: center;
 		align-self: start;
 		position: relative;
-		margin-top: 100px;
+		margin-top: 88px;
 		margin-bottom: 100px;
+	}
+
+	.projects-prompt {
+		display: inline-block;
+		width: 100%;
+		text-wrap: balance;
 	}
 
 	.text-accent {
@@ -128,8 +143,27 @@ import Webring from '../components/Webring.astro';
 	}
 
 	@media (max-width: 600px) {
+        .intro {
+            width: calc(100% - 40px);
+            top: 72px;
+        }
+
+        #hi {
+            font-size: 1.625rem;
+        }
+
+        .text-accent {
+            font-size: clamp(3.75rem, 17vw, 4.5rem);
+        }
+
         #about {
             width: 100%;
+            line-height: 1.5;
+        }
+
+        .projects {
+            margin-top: 60px;
+            margin-bottom: 64px;
         }
 	}
 </style>

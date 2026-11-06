@@ -96,6 +96,7 @@ import Ender from '../assets/project-images/Ender.png';
     .project-grid {
         --vertical-overlap: 50px;
         --horizontal-gap: 5vw;
+        container-type: inline-size;
     }
 
     .project-grid {
@@ -105,6 +106,12 @@ import Ender from '../assets/project-images/Ender.png';
         grid-template-columns: 1fr;
         row-gap: 0;
         margin-inline: auto;
+    }
+
+    @media (max-width: 600px) {
+        .project-grid {
+            width: calc(100% - 40px);
+        }
     }
 
 </style>

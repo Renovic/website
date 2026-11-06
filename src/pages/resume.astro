@@ -18,12 +18,14 @@ const resumeUrl = '/resume.pdf';
 
 <style>
 	:global(.page-shell) {
-		display: block;
+		display: flow-root;
 	}
 
 	.resume-window {
 		width: min(100% - 50px, 1120px);
 		height: calc(100vh - 56px);
+		height: calc(100svh - 56px);
+		box-sizing: border-box;
 		margin: 28px auto;
 		overflow: hidden;
 		border: 1px solid rgba(255, 255, 255, 0.16);
@@ -53,6 +55,7 @@ const resumeUrl = '/resume.pdf';
 		.resume-window {
 			width: calc(100% - 24px);
 			height: calc(100vh - 32px);
+			height: calc(100svh - 32px);
 			margin: 16px auto;
 		}
 	}
